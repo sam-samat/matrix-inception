@@ -83,7 +83,7 @@ public class EntertainmentFunctionality {
         }
        WebElement buyTicketButton= driver.findElement(By.xpath("//a[@href='https://www.mgmresorts.com/en/booking/show-booking.html#/show-listing&showFilter=postmodern-jukebox-1oak&arrive=07/05/2019']"));
             buyTicketButton.sendKeys(Keys.ENTER);
-         String bookingPage="booking";
+            String bookingPage="Show Booking - MGM Resorts";
          if(driver.getTitle().contains(bookingPage)){
              System.out.println("Booking page verification passed");
          }else{
