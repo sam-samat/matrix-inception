@@ -17,7 +17,7 @@ public class EntertainmentFunctionality {
         WebDriver driver= new ChromeDriver();
         driver.get("https://www.mgmresorts.com");
         driver.manage().window().fullscreen();
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         WebElement popUp=driver.findElement(By.xpath("//button[@class='msg-close']"));
          popUp.click();
         WebElement entertainmentButton =driver.findElement(By.id("nav-entertainment-2"));
@@ -27,6 +27,7 @@ public class EntertainmentFunctionality {
         }else{
             System.out.println("Entertainment page Verification failed");
         }
+        //first_Scenario
        WebElement searchEvents =driver.findElement(By.xpath("//input[@id='es-search-term']"));
        searchEvents.sendKeys("Concerts" + Keys.ENTER);
        if(driver.getTitle().contains("Concerts")){
