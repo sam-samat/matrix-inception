@@ -34,6 +34,14 @@ public class MgmProject2 {
 
         WebElement lastName = driver.findElement(By.name("txtLastName"));
         lastName.sendKeys(faker.name().lastName());
+         WebElement Belajio = driver.findElement(By.xpath("//div[@class='rte']"));
+        Belajio.click();
+        if(Belajio.isDisplayed()){
+            System.out.println("Belajio button is displayed");
+        }else{
+            System.out.println("Belajio button is not displayed");
+        }
+
 
 
 
