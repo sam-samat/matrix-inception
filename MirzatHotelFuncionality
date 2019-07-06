@@ -1,0 +1,57 @@
+import io.github.bonigarcia.wdm.WebDriverManager;
+import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+
+    public class Mirzat {
+
+        public static void main(String[] args) throws InterruptedException {
+            WebDriverManager.chromedriver().setup();
+            WebDriver driver = new ChromeDriver();
+            driver.manage().window().maximize();
+            driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+            driver.get("https://www.mgmresorts.com");
+
+            driver.findElement(By.id("nav-offers-8")).click();
+            //count number of links on landing page
+            List<WebElement> listOfLinks = driver.findElements(By.xpath("//body//a"));
+            System.out.println("The number of links on this page: " + listOfLinks.size());
+
+            //verify the text "offer"
+            WebElement text = driver.findElement(By.id("tagsFilter-0-entertainment-btn"));
+            String s = text.getText();
+            System.out.println(s);
+            if (s.contains("offers")) {
+                System.out.println("text verification PASSED!");
+            } else {
+                System.out.println("text verification FAILED!!!");
+
+            }
+            //verify whether each button is clickable inside "all regions" button
+            driver.findElement(By.id("filter-1-btn"));
+            driver.findElement(By.xpath("//*[@id=\"region-0\"]/span")).click();
+            driver.findElement(By.xpath("//*[@id=\"region-1\"]/span")).click();
+            driver.findElement(By.xpath("//*[@id=\"region-2\"]/span")).click();
+            driver.findElement(By.xpath("//*[@id=\"region-3\"]/span")).click();
+            driver.findElement(By.xpath("//*[@id=\"region-4\"]/span")).click();
+            driver.findElement(By.xpath("//*[@id=\"region-5\"]/span")).click();
+
+             //verify whether each button is clickable inside "all types" button
+            driver.findElement(By.id("tagsFilter-0-entertainment-btn"));
+            driver.findElement(By.id("tagsFilter-0-entertainment-btn"));
+            driver.findElement(By.xpath("//*[@id=\"tagsFilter\"]/div/ul/li[1]/a")).click();
+            driver.findElement(By.xpath("//*[@id=\"tagsFilter\"]/div/ul/li[2]/a")).click();
+            driver.findElement((By.xpath("//*[@id=\"tagsFilter\"]/div/ul/li[3]/a"))).click();
+
+
+
+        }
+
+    }
