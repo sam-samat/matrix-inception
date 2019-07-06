@@ -18,6 +18,8 @@ public class MgmProject3 {
         driver.manage().window().fullscreen();
         driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
         driver.get("https://www.mgmresorts.com");
+        
+        
         WebElement groupsWeddings = driver.findElement(By.linkText("Groups & Weddings"));
         groupsWeddings.click();
 
