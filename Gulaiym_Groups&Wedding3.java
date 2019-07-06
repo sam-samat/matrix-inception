@@ -36,6 +36,27 @@ public class MgmProject3 {
         WebElement socialForm = driver.findElement(By.xpath("//div[@class='btn-learn-more']/a"));
         socialForm.sendKeys(Keys.ENTER);
         System.out.println("Social form button is working");
+        
+         Faker faker = new Faker();
+       
+        WebElement inputName = driver.findElement(By.xpath("//form[@id='fsForm2785668']//div[@class='fsSubField fsNameFirst']/input"));
+        Actions action = new Actions(driver);
+        action.moveToElement(inputName).click().build().perform();
+        Thread.sleep(1000);
+
+        inputName.sendKeys("name");
+
+        WebElement inputlastName = driver.findElement(By.id("field55468381-last"));
+        inputlastName.sendKeys(faker.name().lastName());
+
+        WebElement inputEmail = driver.findElement(By.id("field55468385"));
+
+        WebElement contactNumber = driver.findElement(By.id("field55468383"));
+        contactNumber.sendKeys(faker.number().digit());
+
+        WebElement contactPreference = driver.findElement(By.id("fsLegend55468410"));
+
+
 
 
 
