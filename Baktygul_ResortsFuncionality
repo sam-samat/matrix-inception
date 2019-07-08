@@ -13,8 +13,9 @@ import java.util.concurrent.TimeUnit;
 public class MGMBaktygulResortsFuncionality {
     public static void main(String[] args) throws InterruptedException {
 
-
+        // made a changes
         WebDriverManager.chromedriver().setup();
+        
         WebDriver driver = new ChromeDriver();
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
