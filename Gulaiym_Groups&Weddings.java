@@ -1,91 +1,137 @@
 package MavenTasks;
 
+import com.github.javafaker.Faker;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+
+import org.testng.annotations.Test;
 
 import java.util.concurrent.TimeUnit;
 
 public class MgmProject {
-    public static void main(String[] args) {
-        WebDriverManager.chromedriver().setup();
-        WebDriver driver = new ChromeDriver();
-        driver.manage().window().fullscreen();
-        driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);
-        driver.get("https://www.mgmresorts.com");
-        WebElement groupsWeddings = driver.findElement(By.linkText("Groups & Weddings"));
-        groupsWeddings.click();
 
-        WebElement Weddings = driver.findElement(By.linkText("Weddings"));
-        Weddings.isDisplayed();
-        Weddings.click();
+
+        static WebDriver driver;
+        @BeforeMethod
+
+        public void setUp() {
+            WebDriverManager.chromedriver().setup();
+            driver = new ChromeDriver();
+            driver.manage().window().fullscreen();
+            driver.manage().timeouts().implicitlyWait(12, TimeUnit.SECONDS);driver.get("https://www.mgmresorts.com");
+            WebElement groupsWeddings = driver.findElement(By.linkText("Groups & Weddings"));
+           groupsWeddings.click();
+        }
+
+        @AfterMethod
+        public void tearDown(){
+            driver.close();
+            
+        }
+
+        @Test(priority = 1)
+      public void checkingAllButtonsWeddingGroups()throws InterruptedException{
+           
+
        WebElement ConventionMeeting =driver.findElement(By.linkText("Convention & Meeting Venues"));
-       if(ConventionMeeting.isDisplayed()){
-           System.out.println("Convention & Meeting Venues is displayed ");
-       }else{
-           System.out.println("Convention & Meeting is not displayed");
-       }
+       Assert.assertTrue(ConventionMeeting.isDisplayed(),"Convention & Meeting Venues is not displayed " );
+       Thread.sleep(5000);
+       WebElement Weddings = driver.findElement(By.linkText("Weddings"));
+       Assert.assertTrue(Weddings.isDisplayed(),"Weddings button is not displayed");
+        Thread.sleep(5000);
         WebElement SocialGroups = driver.findElement(By.linkText("Social Groups"));
-        if(SocialGroups.isDisplayed()){
-            System.out.println("Social Groups is displayed");
-        }else{
-            System.out.println("Social Groups is not displayed");
-        }
+        Assert.assertTrue(SocialGroups.isDisplayed(),"Social Groups is not displayed");
+        Thread.sleep(5000);
         WebElement EventCenters = driver.findElement(By.linkText("Event Centers"));
-        if(EventCenters.isDisplayed()){
-            System.out.println("Event Centers is displayed ");
-        }else{
-            System.out.println("Event Centers is not displayed");
-        }
-
+        Assert.assertTrue(EventCenters.isDisplayed(),"Event Centers is not displayed");
+        Thread.sleep(5000);
         WebElement MGMResort = driver.findElement(By.linkText("MGM Resorts Productions"));
-        if(MGMResort.isDisplayed()){
-            System.out.println("Mgm Resort Productions is dispalyed");
-        }else{
-            System.out.println("Mgm Resort Productions is not displayed");
-        }
+        Assert.assertTrue(MGMResort.isDisplayed(),"Mgm Resort Productions is not displayed");
+        Thread.sleep(5000);
         WebElement MgmEvent = driver.findElement(By.linkText("MGM Resorts Event Services"));
-        if(MgmEvent.isDisplayed()){
-            System.out.println("Mgm Resorts Event Services is displayed");
-        }else{
-            System.out.println("MgmResorts Event is not displayed");
-        }
+        Assert.assertTrue(MgmEvent.isDisplayed(),"MgmResorts Event is not displayed");
 
-        WebElement message = driver.findElement(By.className("rte"));
-        message.getText();
-        if(message.isDisplayed()){
-            System.out.println("Message displayed");
-        }else{
-            System.out.println("Message not displayed");
-        }
-        WebElement learnMore=driver.findElement(By.xpath("//a[@href='/en/groups-and-weddings/wedding-planning.html']"));
-        learnMore.sendKeys(Keys.ENTER);
+    }
 
+    @Test(priority = 2)
 
+    public void SocialGroupsRequest(){
+            
+        WebElement Weddings = driver.findElement(By.linkText("Weddings"));
+        Weddings.click();
 
-//        WebElement LasVegasEventCenter = driver.findElement(By.className("icon-icon-groups hdr"));
-//        if(LasVegasEventCenter.isDisplayed()){
-//            System.out.println("Las Vegas Event Center is Displayed");
-//        }else{
-//            System.out.println("Las Vegas Event Center not Displayed");
-//        }
+        Assert.assertTrue(driver.getTitle().contains("Weddings"));
+        
 
+    }
 
+    @Test(priority = 3)
 
-        driver.findElement((By.className("icon-wedding-locations hdr")));
-        WebElement weddingGallary= driver.findElement(By.className("icon-wedding-locations hdr"));
-        if(weddingGallary.isDisplayed()){
-            System.out.println("Photos is displayed");
-        }else{
-            System.out.println("Photos not displayed");
-        }
+    public void booking(){
+
+        driver.findElement(By.xpath("//div[@class = 'rte']//a[.='Bellagio']")).click();
+       // driver.get("https://bellagio.mgmresorts.com/en/booking/your-reservation.html#/step3");
+
+        WebElement bookRoom = driver.findElement(By.xpath("//div[@class='nav-booking']//a"));
+        bookRoom.click();
+        driver.findElement(By.className("dateWrapper__button--rate")).click();
+
+        Faker faker = new Faker();
+        WebElement FirstName = driver.findElement(By.id("guest-info-cont-first-name"));
+        FirstName.sendKeys(faker.name().name());
+        WebElement LastName = driver.findElement(By.id("guest-info-cont-last-name"));
+        LastName.sendKeys(faker.name().lastName());
+        WebElement PhoneNumber = driver.findElement(By.id("guest-info-cont-phone"));
+        PhoneNumber.sendKeys(faker.phoneNumber().cellPhone());
+        WebElement Email = driver.findElement(By.id("guest-info-login-email-address"));
+        Email.sendKeys(faker.internet().emailAddress());
+        WebElement NameOnCard = driver.findElement(By.id("guest-info-cont-last-name"));
+        NameOnCard.sendKeys(faker.name().fullName());
+        WebElement CardNumber = driver.findElement(By.id("bill-card-num"));
+        CardNumber.sendKeys(faker.finance().creditCard());
+        WebElement inputExpMonth = driver.findElement(By.id("bill-card-exp-month"));
+        Email.sendKeys("06");
+        WebElement ExpYear = driver.findElement(By.id("bill-card-exp-year"));
+        ExpYear.sendKeys("2019");
+        WebElement Cvv = driver.findElement(By.id("bill-card-cvv"));
+        Cvv.sendKeys("978");
+        WebElement Address = driver.findElement(By.id("bill-address1"));
+        Address.sendKeys(faker.address().streetAddress());
+        WebElement City = driver.findElement(By.id("bill-city"));
+        City.sendKeys(faker.address().cityName());
+        WebElement State = driver.findElement(By.id("bill-us-state"));
+        State.sendKeys(faker.address().state());
+        WebElement ZipCode = driver.findElement(By.id("bill-zip"));
+        ZipCode.sendKeys(faker.address().zipCode());
+        WebElement TermAndConditions = driver.findElement(By.id("terms-label"));
+        TermAndConditions.click();
+        WebElement confirm = driver.findElement(By.id("review-final"));
+        confirm.click();
 
     }
 
 
 
 
-}
+
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
