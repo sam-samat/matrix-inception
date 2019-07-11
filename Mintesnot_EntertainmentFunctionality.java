@@ -82,6 +82,6 @@ public class MGM_Entertainment {
         buyTicketButton.sendKeys(Keys.ENTER);
         String bookingPage="Show Booking - MGM Resorts";
         Assert.assertTrue(driver.getTitle().contains(bookingPage), "Booking page failed");
-        driver.close();
+       
 
     }}
