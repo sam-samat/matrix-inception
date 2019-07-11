@@ -16,32 +16,31 @@ import java.util.concurrent.TimeUnit;
 public class MGM_Entertainment {
     WebDriver driver;
 
-    @BeforeClass
+    @BeforeMethod
     public void setUp() {
         WebDriverManager.chromedriver().setup();
         driver = new ChromeDriver();
         driver.get("https://www.mgmresorts.com");
         driver.manage().window().fullscreen();
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-
+        WebElement entertainmentButton = driver.findElement(By.id("nav-entertainment-2"));
+        entertainmentButton.click();
     }
 
     @Test
     public void entertainmentFunctionality() {
         WebElement popUp = driver.findElement(By.xpath("//button[@class='msg-close']"));
         popUp.click();
-        WebElement entertainmentButton = driver.findElement(By.id("nav-entertainment-2"));
+         WebElement entertainmentButton = driver.findElement(By.id("nav-entertainment-2"));
         entertainmentButton.click();
         Assert.assertTrue(driver.getTitle().contains("Entertainment"));
     }
 
     @Test
-    public void searchEntertainmentFunctionality() throws InterruptedException {
+    public void searchEntertainmentFunctionality() {
 
         WebElement searchEvents = driver.findElement(By.xpath("//input[@id='es-search-term']"));
         searchEvents.sendKeys("Concerts");
-//
-//        Thread.sleep(2000);
 
         WebElement cityDropDown = driver.findElement(By.xpath("//div[@id='search-location-drop']"));
         cityDropDown.click();
